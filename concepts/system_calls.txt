@@ -1,0 +1,5 @@
+All the systems calls learnt related to Socket Programming. 
+
+1. getaddrinfo()
+	a. Performs DNS and service name lookups.
+	b. Fills out the "struct addrinfo" as per the information required.
