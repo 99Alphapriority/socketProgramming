@@ -21,6 +21,8 @@ void chat(int sockfd)
 
 	while(1)
 	{
+		memset(buff, 0, sizeof(buff));
+
 		if(-1 == recv(sockfd, buff, MAX_BUFF - 1,0))
 		{
 			fprintf(stderr,"[%s:%d] error in receiving message: %s\n",__func__, __LINE__, strerror(errno));
@@ -29,9 +31,8 @@ void chat(int sockfd)
 		else
 			fprintf(stderr,"client>> %s",buff);
 
-		fflush(stdout);
-		fflush(stderr);
-		fflush(stdin);
+		memset(buff, 0, sizeof(buff));
+
 		n = 0;
 
 		fprintf(stderr,"server>> ");
@@ -44,7 +45,6 @@ void chat(int sockfd)
 			exit(0);
 		}
 
-		fflush(stdin);
 
 		if(strncmp("exit", buff,4) == 0)
 		{

@@ -20,6 +20,8 @@ void chat(int sockfd)
 
 	while(1)
 	{
+		memset(buff, 0, sizeof(buff));
+		
 		fprintf(stderr,"client>> ");
 		n = 0;
 		while((buff[n++] = getchar()) != '\n');
@@ -30,9 +32,7 @@ void chat(int sockfd)
 			exit(0);
 		}
 		
-		fflush(stdin);
-		fflush(stderr);
-		fflush(stdout);
+		memset(buff, 0, sizeof(buff));
 
 		int status = recv(sockfd, buff, MAX_BUFF - 1, 0);
 
