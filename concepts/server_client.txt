@@ -1,0 +1,2 @@
+1. There will only be one server on the machine and that server will handle multiple clients using fork().
+2. Server will wait for a connection, accept() it and fork() a child process to handle it.

@@ -3,3 +3,66 @@ All the systems calls learnt related to Socket Programming.
 1. getaddrinfo()
 	a. Performs DNS and service name lookups.
 	b. Fills out the "struct addrinfo" as per the information required.
+2. socket()
+	a. Returns a socket descriptor.
+	b. Arguments:
+		domian		-> AF_INET, AF_INET6
+		type		-> SOCK_STREAM (TCP), SOCK_DGRAM(UDP)
+		protocol	-> 0 or getprotobyname(/*tcp*/ /*udp*/)
+	c. Used in other system calls
+	d. Return value -1 means socket creation failed.
+3. bind()
+	a. Used to associate the socket descriptor with an IP address and port number
+	b. Return value != 0 means bind fail.
+4. connect()
+	a. Used to make a connection to the specified IP address and port number.
+	b. If the socket descriptor is not binded to a port number, the kernel will choose a local port and the server we connect to 
+	   automatically gets this information.
+	c. Return value != 0 means connection with server failed.
+5. listen()
+	a. Wait for incoming connections.
+	b. Can allow "int backlog" number of connections on the incoming queue.
+	c. Incoming connections wait in the queue until accept().
+	d. Returns -1 on error.
+6. accept()
+	a. Accepts the connections in the incoming queue.
+	b. Returns a new socket descriptor to use for this single connection.
+	c. New socket descriptor will be used for send() and recv().
+	d. Returns -1 on error.
+7. send()
+	a. Used to send message to the provided socket descriptor.
+	b. Returns the number of bytes sent.
+	c. Use the returned bytes to calculate the length of the message remaining to be sent. 
+	d. Returns -1 on error. 
+8. recv()
+	a. Used to receive messages from the provided file descriptor.
+	b. Returns the length of the message received in bytes.
+	c. Return value 0 means that the remote side has closed the connection.
+	d. Returns -1 on error.
+9. sendto()
+	a. Similar to send() but used for SOCK_DGRAM.
+	b. Need to specify the destination address and port number.
+	c. Returns the number of bytes actually sent.
+	d. Returns -1 on error.
+10. recvfrom()
+	a. Similar to recv() but used for SOCK_DGRAM.
+	b. Need to specify the address of the originating machine, i.e. the machine that is sending the message.
+	c. Returns the number of bytes received.
+	d. Returns -1 on error.
+
+NOTE: If we use connect() for Datagram sockets we can still use send() and recv() as the socket interface will automatically 
+      add the destination and source information for us.
+
+11. close()
+	a. Used to close the connection on the socket descriptor.
+	b. Prevents any further reads and writes on the socket.
+
+12. shutdown()
+	a. Provides more control over how the socket closes.
+	b. how variable value:
+		0->Further receives not allowed
+		1->Further sends not allowed
+		2->Further sends and receives not allowed
+	c. Returns -1 on error.
+	d. Still need to call the close() to free the socket descriptor.
+
